@@ -28,37 +28,43 @@ const wrapper = factory(data, props)
 
 const validateData = (data) => {
 
-      if(typeof data.required !== "undefined"){
-        if(data.required === true){
-          //Variable defined
-          expect(wrapper.vm[data.name]).toBeDefined()
+  let needsValidation = false
+  if(typeof data.required === "undefined"){
+    needsValidation = true
+  } else {
+    if(data.required){
+      needsValidation = true
+    }
+  }
 
-          //Type validation
-          if(data.type === "array"){
-            expect(Array.isArray(wrapper.vm[data.name])).toBeTruthy()
-          } else {
-            expect(typeof wrapper.vm[data.name]).toEqual(data.type)
-          }
+  if(needsValidation){
+    //Variable defined
+    expect(wrapper.vm[data.name]).toBeDefined()
 
-          //Value validation
-          if(typeof data.maxValue !== "undefined"){
-            expect(wrapper.vm[data.name]).toBeLessThanOrEqual(data.maxValue)
-          }
-          if(typeof data.minValue !== "undefined"){
-            expect(wrapper.vm[data.name]).toBeGreaterThanOrEqual(data.minValue)
-          }
+    //Type validation
+    if(data.type === "array"){
+      expect(Array.isArray(wrapper.vm[data.name])).toBeTruthy()
+    } else {
+      expect(typeof wrapper.vm[data.name]).toEqual(data.type)
+    }
 
-          //Length validation
-          if(typeof data.maxLength !== "undefined"){
-            expect(wrapper.vm[data.name].length).toBeLessThanOrEqual(data.maxLength)
-          }
-          if(typeof data.minLength !== "undefined"){
-            expect(wrapper.vm[data.name].length).toBeGreaterThanOrEqual(data.minLength)
-          }
-        }
-      }
+    //Value validation
+    if(typeof data.maxValue !== "undefined"){
+      expect(wrapper.vm[data.name]).toBeLessThanOrEqual(data.maxValue)
+    }
+    if(typeof data.minValue !== "undefined"){
+      expect(wrapper.vm[data.name]).toBeGreaterThanOrEqual(data.minValue)
+    }
+
+    //Length validation
+    if(typeof data.maxLength !== "undefined"){
+      expect(wrapper.vm[data.name].length).toBeLessThanOrEqual(data.maxLength)
+    }
+    if(typeof data.minLength !== "undefined"){
+      expect(wrapper.vm[data.name].length).toBeGreaterThanOrEqual(data.minLength)
+    }
+  }
       
-
 }
 
 

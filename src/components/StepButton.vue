@@ -42,7 +42,8 @@ export default {
   },
   data() {
     return {
-      list: ["toto", "tutu"]
+      list: ["toto", "tutu"],
+      title: "Title"
     }
   },
   computed: {

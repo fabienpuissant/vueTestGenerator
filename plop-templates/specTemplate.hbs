@@ -1,6 +1,19 @@
 import { shallowMount } from '@vue/test-utils'
 import Component from '@/components/{{name}}.vue'
-import {dataInfos, propsInfos, functions} from './{{name}}SpecHelper.js'
+import {dataInfos, propsInfos, functions} from '../specHelpers/{{name}}SpecHelper.js'
+
+const formatDataForFactory = (dataInfos, propsInfos) => {
+  const data = {}
+  dataInfos.forEach(element => {
+    data[element.name] = element.value
+  })
+
+  const props = {}
+  propsInfos.forEach(element => {
+    props[element.name] = element.value
+  })
+  return [data, props]
+}
 
 const [data, props] = formatDataForFactory(dataInfos, propsInfos)
 
@@ -87,19 +100,6 @@ describe("{{name}}" , () => {
 })
 
 
-
-const formatDataForFactory = (dataInfos, propsInfos) => {
-  const data = {}
-  dataInfos.forEach(element => {
-    data[element.name] = element.value
-  })
-
-  const props = {}
-  propsInfos.forEach(element => {
-    props[element.name] = element.value
-  })
-  return [data, props]
-}
 
 const replaceDataForFactory = (newValue, resultIndex) => {
   let newData = [...dataInfos]

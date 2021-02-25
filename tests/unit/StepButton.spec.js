@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Component from '@/components/StepButton.vue'
-import {dataInfos, propsInfos, functions} from './StepButtonSpecHelper.js'
+import {dataInfos, propsInfos, functions} from '../specHelpers/StepButtonSpecHelper.js'
 
 const formatDataForFactory = (dataInfos, propsInfos) => {
   const data = {}
@@ -98,7 +98,6 @@ describe("StepButton" , () => {
         })
       })
 })
-
 
 
 

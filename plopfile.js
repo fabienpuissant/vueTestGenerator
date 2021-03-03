@@ -8,10 +8,15 @@ module.exports = function (plop) {
                 name: 'name',
                 message: 'Name of the component to test'
             },
+            {
+                type: 'input',
+                name: 'path',
+                message: 'Relative path to components folder'
+            },
         ],
         actions: [{
             type: 'add',
-            path: 'tests/unit/{{name}}.spec.js',
+            path: 'tests/unit/{{path}}{{name}}.spec.js',
             templateFile: './plop-templates/specTemplate.hbs'
         }]
     });

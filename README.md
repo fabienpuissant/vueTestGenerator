@@ -23,28 +23,28 @@ Example :
 export const dataInfos = [
 	{
 		name: "dataArray",
-		type: "array",
 		value: ["toto", "titi"],
+		type: "array", //optinnal
 		minLength: 1, //optionnal
 		maxLength: 10, //optional
 	},
 	{
 		name: "dataNumber",
-		type: "number",
-		minValue: 0, //optionnal
-		maxValue: 7, //optionnal
 		value: 0
+		type: "number", //optionnal
+		minValue: 0, //optionnal
+		maxValue: 7, //optionnal	
 	},
 	{
 		name: "dataString",
-		type: "string",
 		value: "abc" ,
+		type: "string", //optionnal
 		minLength: 0, //optionnal
 		maxLength: 3, //optionnal
 	},
 	{
 		name: "dataObject",
-		type: "object"
+		type: "object" //optionnal
 	}
 ```
 ### propsInfos
@@ -53,7 +53,12 @@ This object follows the same pattern, you can provide another key **required** t
 
 ### functions
 
-This array will describe the functions of the component. You will be able to easily test different input parameters and expect differents output
+This array will describe the functions of the component. You will be able to easily test different input parameters and expect differents output. Each function described is an obkect containing the keys :
+	- **name** : the name of the function to test
+	- **possibleValues** optionnal : array of different values of data or props which will be used inside the function. Each value is an object containing the name of the value (declared in the propsInfos or dataInfos) and the values. The values is an array of value that the data will take. For example, if values has length 8, the function will be called and tested 8 times whith the 8 values provided.
+	- **params** optionnal : Array of params that will be passed to the fonction. For example, if the params key equal [[1, 2, "test'], [2, 3, "ok"]], the function will be called and tested two times with the params (1, 2, "test") and with (2, 3, "ok"). 
+	- **returnValues** optionnal : values that the function will return in the same order than params 
+**returnValues**, **params**,  **values** property in possibleValues and valuesChanged must have the same length because the function will be tested according to the number of these arrays. But each of these objects can be used independently. You can provide only returnValues, params, possibleValues or valuesChanged. And you also can combine them as you want. Check the example or the specHelpers in the code to make it clearer.
 
 ```
 export  const  functions = [
@@ -70,29 +75,33 @@ export  const  functions = [
 					   "InfoCaracConfigBonus", "", "GestionAchat", ""]
 	},
 	{
-		name: "classStepButton",
-		possibleValues: [
+		name:  "changeTitle",
+		params : [["test", [1,2,3], 10], ["ok", [4,5,6], 20]],
+		functionType:  "method",
+		valuesChanged: [
 			{
-				name:  "value",
-				values: [0,1,2,3,4,5,6,7]
+				name:  "title",
+				values: ["test", "ok"]
+			},
+			{
+				name:  "list",
+				values: [[1,2,3], [4,5,6]]
+			},
+			{
+				name:  "testData",
+				values: [10, 20]
 			}
 		],
-		functionType:  "computed",
-		returnValues: [
-			{"Button-step" :  true, "Button-step-0":  true},
-			{"Button-step" :  true, "Button-step-1":  true},
-			{"Button-step" :  true, "Button-step-2":  true},
-			{"Button-step" :  true, "Button-step-3":  true},
-			{"Button-step" :  true, "Button-step-4":  true},
-			{"Button-step" :  true, "Button-step-5":  true},
-			{"Button-step" :  true, "Button-step-6":  true},
-			{"Button-step" :  true, "Button-step-7":  true},
-		]
+		returnValues: ["ok", "ok"]
+	},
+	{
+		name:  "test",
+		returnValues: ["testing"]
 	}
 ]
 ```
 
 ### Generate the spec file
 
-Once you have created the spec helper file, you can use plop to generate the spec using the command **plop test**.  Enter the name of the component to test (which is the same than the spec file name you have created ) to generate the spec. Then the spec.js file is created in **tests/unit**. After that you can start the tests using the command **yarn test:unit**
+Once you have created the spec helper file, you can use plop to generate the spec using the command **plop test**.  Enter the name of the component to test (which is the same than the spec file name you have created ). After it ask the relative path of the component. If the component is in the root of the component folder, type nothing. Else, if the component is in a subfolder enter it. Example, the component is in component/tableView/table/componentName.vue. When it ask name of the component to test : componentName. And relative path : tableView/table/. Then the spec.js file is created in **tests/unit**. After that you can start the tests using the command **yarn test:unit**
 

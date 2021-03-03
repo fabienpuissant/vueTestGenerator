@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
-import Component from '@/components/{{path}}{{name}}.vue'
-import {dataInfos, propsInfos, functions} from '@/../tests/specHelpers/{{name}}SpecHelper.js'
+import Component from '@/components/AddVehicle/StepButton.vue'
+import {dataInfos, propsInfos, functions} from '@/../tests/specHelpers/StepButtonSpecHelper.js'
 
 const formatDataForFactory = (dataInfos, propsInfos) => {
   const data = {}

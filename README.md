@@ -54,11 +54,11 @@ This object follows the same pattern, you can provide another key **required** t
 ### functions
 
 This array will describe the functions of the component. You will be able to easily test different input parameters and expect differents output. Each function described is an obkect containing the keys :
-	- **name** : the name of the function to test
-	- **possibleValues** optionnal : array of different values of data or props which will be used inside the function. Each value is an object containing the name of the value (declared in the propsInfos or dataInfos) and the values. The values is an array of value that the data will take. For example, if values has length 8, the function will be called and tested 8 times whith the 8 values provided.
-	- **params** optionnal : Array of params that will be passed to the fonction. For example, if the params key equal [[1, 2, "test'], [2, 3, "ok"]], the function will be called and tested two times with the params (1, 2, "test") and with (2, 3, "ok"). 
-	- **returnValues** optionnal : values that the function will return in the same order than params 
-	- **emits** optionnal : will describe the emit that the function can make. Each emit require  a tag which is the first parameter of $emit. You must provide values which is an array and his length must be equal to the number of time that the function will be tested. If there is nothing in the second parameter of $emit or if the function must not emit because of a condition, you can pass the value **null**. 
+	- **name** : the name of the function to test\
+	- **possibleValues** optionnal : array of different values of data or props which will be used inside the function. Each value is an object containing the name of the value (declared in the propsInfos or dataInfos) and the values. The values is an array of value that the data will take. For example, if values has length 8, the function will be called and tested 8 times whith the 8 values provided.\
+	- **params** optionnal : Array of params that will be passed to the fonction. For example, if the params key equal [[1, 2, "test'], [2, 3, "ok"]], the function will be called and tested two times with the params (1, 2, "test") and with (2, 3, "ok").\
+	- **returnValues** optionnal : values that the function will return in the same order than params\
+	- **emits** optionnal : will describe the emit that the function can make. Each emit require  a tag which is the first parameter of $emit. You must provide values which is an array and his length must be equal to the number of time that the function will be tested. If there is nothing in the second parameter of $emit or if the function must not emit because of a condition, you can pass the value **null**. \
 **returnValues**, **params**,  **values**, **emits**, property in possibleValues and valuesChanged must have the same length because the function will be tested according to the number of these arrays. But each of these objects can be used independently. You can provide only returnValues, params, possibleValues or valuesChanged. And you also can combine them as you want. Check the example or the specHelpers in the code to make it clearer.
 
 ```

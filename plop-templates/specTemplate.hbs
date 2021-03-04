@@ -19,7 +19,9 @@ const [data, props] = formatDataForFactory(dataInfos, propsInfos)
 
 const factory = (data, props) => {
   return shallowMount(Component, {
-      data: data,
+      data(){
+        return data
+      },
       propsData: props
   });
 };

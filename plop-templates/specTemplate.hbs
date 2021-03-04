@@ -151,10 +151,10 @@ describe("{{name}}" , () => {
             newWrapper = factory(newData, newProps);
 
             //Updating the data in case that data changes in possibleValues
-            let keys = Object.keys(newData)
-            for(let i = 0; i < keys.length; i++){
-              newWrapper.vm[keys[i]] = newData[keys[i]]
-            }
+            fonction.possibleValues.forEach((newValue) => {
+              newWrapper.vm[newValue.name] = newValue.values[resultIndex]
+            })
+
             
             //If the function return something
             if(fonction.returnValues !== undefined){

@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Component from '@/components/AddVehicle/StepButton.vue'
+import Component from '@/components/StepButton.vue'
 import {dataInfos, propsInfos, functions} from '@/../tests/specHelpers/StepButtonSpecHelper.js'
 
 const formatDataForFactory = (dataInfos, propsInfos) => {
@@ -59,6 +59,9 @@ const validateData = (data) => {
     }
 
     //Length validation
+    if(typeof data.length !== "undefined"){
+      expect(wrapper.vm[data.name].length).toEqual(data.maxLength)
+    }
     if(typeof data.maxLength !== "undefined"){
       expect(wrapper.vm[data.name].length).toBeLessThanOrEqual(data.maxLength)
     }
@@ -108,6 +111,11 @@ describe("StepButton" , () => {
       else if(fonction.valuesChanged !== undefined){
         if(fonction.valuesChanged[0] !== undefined){
           functionIteration = fonction.valuesChanged[0].values.length
+        }
+      }
+      else if(fonction.emits !== undefined){
+        if(fonction.emits[0] !== undefined){
+          functionIteration = fonction.emits[0].values.length
         }
       }
 
@@ -172,6 +180,16 @@ describe("StepButton" , () => {
           if(fonction.valuesChanged !== undefined){
             fonction.valuesChanged.forEach(value => {
               expect(newWrapper.vm[value.name]).toEqual(value.values[resultIndex])
+            })
+          }
+
+          //Emits validator
+          if(fonction.emits !== undefined){
+            fonction.emits.forEach(emit => {
+              expect(newWrapper.emitted(emit.tag)).toBeTruthy()
+              if(emit.values[resultIndex] !== null){
+                expect(newWrapper.emitted(emit.tag)[0]).toEqual([emit.values[resultIndex]])
+              }
             })
           }
         }

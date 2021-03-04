@@ -98,12 +98,26 @@ export const functions = [
                 values: [11, 21]
             }
         ],
-        returnValues: ["ok", "ok"]
+        returnValues: ["ok", "ok"],
+        emits: [{
+            tag: "function",
+            values: ["testEmit", "testEmit"]
+        }]
     },
 
     {
         name: "test",
         returnValues: ["testing"]
+    },
+
+    {
+        name: "testEmitting",
+        emits: [
+            {
+                tag: "testing",
+                values: ["ok"]
+            }
+        ]
     }
     
 

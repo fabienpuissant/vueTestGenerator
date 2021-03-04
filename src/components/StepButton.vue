@@ -71,11 +71,15 @@ export default {
       this.title = newTitle
       this.list = newList
       this.testData = this.testData + 1
+      this.$emit("function", "testEmit")
       return "ok"
     },
     test(){
       return "testing"
     },
+    testEmitting(){
+      this.$emit("testing", "ok")
+    }
   },
 };
 </script>

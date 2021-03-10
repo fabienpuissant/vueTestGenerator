@@ -151,9 +151,11 @@ describe("{{name}}" , () => {
             newWrapper = factory(newData, newProps);
 
             //Updating the data in case that data changes in possibleValues
-            fonction.possibleValues.forEach((newValue) => {
-              newWrapper.vm[newValue.name] = newValue.values[resultIndex]
-            })
+            if(fonction.possibleValues !== undefined){
+              fonction.possibleValues.forEach((newValue) => {
+                newWrapper.vm[newValue.name] = newValue.values[resultIndex]
+              })
+            }
 
             
             //If the function return something

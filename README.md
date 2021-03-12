@@ -46,6 +46,7 @@ export const dataInfos = [
 		name: "dataObject",
 		type: "object" //optionnal
 	}
+]
 ```
 ### propsInfos
 
@@ -60,6 +61,8 @@ This array will describe the functions of the component. You will be able to eas
 	- **returnValues** optionnal : values that the function will return in the same order than params\
 	- **emits** optionnal : will describe the emit that the function can make. Each emit require  a tag which is the first parameter of $emit. You must provide values which is an array and his length must be equal to the number of time that the function will be tested. If there is nothing in the second parameter of $emit or if the function must not emit because of a condition, you can pass the value **null**. \
 **returnValues**, **params**,  **values**, **emits**, property in possibleValues and valuesChanged must have the same length because the function will be tested according to the number of these arrays. But each of these objects can be used independently. You can provide only returnValues, params, possibleValues or valuesChanged. And you also can combine them as you want. Check the example or the specHelpers in the code to make it clearer.
+
+If you want to test a watcher, you have to not pass the name of the function and pass in possibleValues the value that will trigger the watcher. Then you can use the same logic than functions with multiple possible values to test with valuesChanged and emits associated. Check the example below.
 
 ```
 export  const  functions = [
@@ -103,8 +106,34 @@ export  const  functions = [
 	},
 	{
 		name:  "test",
+		functionType: "method"
 		returnValues: ["testing"]
-	}
+	},
+	{
+        functionType: "watcher",
+        possibleValues:[
+            {
+                name:"testData",
+                values: [6, 2, 5]
+            }
+        ],
+        valuesChanged: [
+            {
+                name: "title",
+                values: [
+                    "Title 6",
+                    "Title 2",
+                    "Title 5"
+                ]
+            }
+        ],
+        emits: [
+            {
+                tag: "titleChanged",
+                values: [6,2,5]
+            } 
+        ]
+    }
 ]
 ```
 

@@ -24,6 +24,12 @@ export default {
       testData: 3
     }
   },
+  watch:{
+    testData(){
+      this.title = "Title " + this.testData
+      this.$emit("titleChanged", this.testData)
+    }
+  },
   computed: {
     classStepButton() {
       let classBar = {

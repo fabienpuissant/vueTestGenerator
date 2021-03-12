@@ -97,7 +97,21 @@ describe("StepButton" , () => {
   //Function Validations
   functions.forEach(fonction => {
 
-    it("Should have a " + fonction.functionType + " " + fonction.name + " function valid", () => {
+    let nameFunction
+    if(fonction.name === undefined || fonction.functionType === "watcher"){
+      if(fonction.possibleValues !== undefined){
+        nameFunction = "on value " + fonction.possibleValues[0].name
+      }
+    } else {
+      nameFunction = fonction.name 
+    }
+
+    let functionType = ""
+    if(fonction.functionType !== undefined){
+      functionType = fonction.functionType
+    }
+
+    it("Should have a " + functionType + " " + nameFunction + " valid", () => {
       let functionIteration = 0
       if(fonction.returnValues !== undefined){
           functionIteration = fonction.returnValues.length
@@ -151,30 +165,36 @@ describe("StepButton" , () => {
             newWrapper = factory(newData, newProps);
 
             //Updating the data in case that data changes in possibleValues
-            let keys = Object.keys(newData)
-            for(let i = 0; i < keys.length; i++){
-              newWrapper.vm[keys[i]] = newData[keys[i]]
+            if(fonction.possibleValues !== undefined){
+              fonction.possibleValues.forEach((newValue) => {
+                newWrapper.vm[newValue.name] = newValue.values[resultIndex]
+              })
             }
             
-            //If the function return something
-            if(fonction.returnValues !== undefined){
-              //Add params to the func
-              if(fonction.params !== undefined){
-                let res =  newWrapper.vm[fonction.name](...fonction.params[resultIndex])
-                expect(res).toEqual(fonction.returnValues[resultIndex])
-              } 
-              else {
-                expect(newWrapper.vm[fonction.name]).toEqual(fonction.returnValues[resultIndex])
+            if(fonction.name !== undefined || fonction.functionType !== "watcher"){
+              //If the function return something
+              if(fonction.returnValues !== undefined){
+                //Add params to the func
+                if(fonction.params !== undefined){
+                  let res =  newWrapper.vm[fonction.name](...fonction.params[resultIndex])
+                  expect(res).toEqual(fonction.returnValues[resultIndex])
+                } 
+                else {
+                  expect(newWrapper.vm[fonction.name]).toEqual(fonction.returnValues[resultIndex])
+                }
               }
-            }
+              else {
+                //Add params to the function
+                if(fonction.params !== undefined){
+                  newWrapper.vm[fonction.name](...fonction.params[resultIndex])
+                } 
+                else {
+                  newWrapper.vm[fonction.name]()
+                }
+              }
+            } 
             else {
-              //Add params to the function
-              if(fonction.params !== undefined){
-                newWrapper.vm[fonction.name](...fonction.params[resultIndex])
-              } 
-              else {
-                newWrapper.vm[fonction.name]()
-              }
+              newWrapper.vm.$options.watch[fonction.possibleValues[0].name].call(newWrapper.vm);
             }
           }
 
@@ -188,8 +208,8 @@ describe("StepButton" , () => {
           //Emits validator
           if(fonction.emits !== undefined){
             fonction.emits.forEach(emit => {
-              expect(newWrapper.emitted(emit.tag)).toBeTruthy()
               if(emit.values[resultIndex] !== null){
+                expect(newWrapper.emitted(emit.tag)).toBeTruthy()
                 expect(newWrapper.emitted(emit.tag)[0]).toEqual([emit.values[resultIndex]])
               }
             })

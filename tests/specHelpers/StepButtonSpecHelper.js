@@ -107,16 +107,43 @@ export const functions = [
 
     {
         name: "test",
+        functionType: "method",
         returnValues: ["testing"]
     },
 
     {
         name: "testEmitting",
+        functionType: "method",
         emits: [
             {
                 tag: "testing",
                 values: ["ok"]
             }
+        ]
+    },
+    {
+        functionType: "watcher",
+        possibleValues:[
+            {
+                name:"testData",
+                values: [6, 2, 5]
+            }
+        ],
+        valuesChanged: [
+            {
+                name: "title",
+                values: [
+                    "Title 6",
+                    "Title 2",
+                    "Title 5"
+                ]
+            }
+        ],
+        emits: [
+            {
+                tag: "titleChanged",
+                values: [6,2,5]
+            } 
         ]
     }
     

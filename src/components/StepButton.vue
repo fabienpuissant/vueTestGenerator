@@ -25,9 +25,12 @@ export default {
     }
   },
   watch:{
-    testData(){
-      this.title = "Title " + this.testData
-      this.$emit("titleChanged", this.testData)
+    testData:{
+      deep: true,
+      handler(){
+        this.title = "Title " + this.testData
+        this.$emit("titleChanged", this.testData)
+      }
     }
   },
   computed: {

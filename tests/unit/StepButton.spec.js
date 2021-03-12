@@ -194,7 +194,12 @@ describe("StepButton" , () => {
               }
             } 
             else {
-              newWrapper.vm.$options.watch[fonction.possibleValues[0].name].call(newWrapper.vm);
+              let watcher = newWrapper.vm.$options.watch[fonction.possibleValues[0].name]
+              if(watcher.handler !== undefined){
+                watcher.handler.call(newWrapper.vm);
+              } else {
+                watcher.call(newWrapper.vm)
+              }
             }
           }
 
